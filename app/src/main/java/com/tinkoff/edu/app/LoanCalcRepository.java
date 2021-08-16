@@ -8,7 +8,6 @@ public class LoanCalcRepository {
      * @return requestId
      */
     public static int save() {
-        int localVar = ++requestId;
-        return localVar;
+        return  ++requestId;
     }
 }
