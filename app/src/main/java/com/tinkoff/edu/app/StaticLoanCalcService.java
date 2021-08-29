@@ -1,7 +1,11 @@
 package com.tinkoff.edu.app;
 
 public class StaticLoanCalcService implements LoanCalcService{
-    private LoanCalcRepository repo = new StaticLoanCalcRepository();
+    private LoanCalcRepository repo;
+
+    public StaticLoanCalcService(LoanCalcRepository repo){
+        this.repo = repo;
+    }
     /**
      *TODO  Loan calculation
      */
