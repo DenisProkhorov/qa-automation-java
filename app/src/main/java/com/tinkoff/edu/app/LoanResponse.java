@@ -1,10 +1,10 @@
 package com.tinkoff.edu.app;
 
-public class LoanResponce {
+public class LoanResponse {
     private final int margin;
-    private final boolean resolution;
+    private final ResponseType resolution;
 
-    public LoanResponce(int margin, boolean resolution) {
+    public LoanResponse(int margin, ResponseType resolution) {
         this.margin = margin;
         this.resolution = resolution;
     }
@@ -13,7 +13,7 @@ public class LoanResponce {
         return margin;
     }
 
-    public boolean isResolution() {
+    public ResponseType getResolution() {
         return resolution;
     }
 }

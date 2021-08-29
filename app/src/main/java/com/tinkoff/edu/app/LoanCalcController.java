@@ -2,14 +2,15 @@ package com.tinkoff.edu.app;
 
 
 public class LoanCalcController {
+    private LoanCalcLogger loanCalcLogger = new LoanCalcLogger();
+    private LoanCalcService service = new StaticLoanCalcService();
+
     /**
      *TODO  validates and logs request
      */
     public int createRequest(LoanRequest request) {
-        LoanCalcLogger loanCalcLogger = new LoanCalcLogger();
         loanCalcLogger.log(request);
-        LoanCalcService loanCalcService = new LoanCalcService();
-        return loanCalcService.createRequest(request);
+        return service.createRequest(request);
 
     }
 }
