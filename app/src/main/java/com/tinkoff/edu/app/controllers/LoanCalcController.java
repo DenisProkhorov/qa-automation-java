@@ -1,5 +1,8 @@
-package com.tinkoff.edu.app;
+package com.tinkoff.edu.app.controllers;
 
+
+import com.tinkoff.edu.app.repository.LoanCalcService;
+import com.tinkoff.edu.app.model.LoanRequest;
 
 public class LoanCalcController{
     private LoanCalcService service;

@@ -1,6 +1,10 @@
-package com.tinkoff.edu.app;
+package com.tinkoff.edu.app.service;
 
-public class StaticLoanCalcService implements LoanCalcService{
+import com.tinkoff.edu.app.repository.LoanCalcRepository;
+import com.tinkoff.edu.app.repository.LoanCalcService;
+import com.tinkoff.edu.app.model.LoanRequest;
+
+public class StaticLoanCalcService implements LoanCalcService {
     private LoanCalcRepository repo;
 
     public StaticLoanCalcService(LoanCalcRepository repo){

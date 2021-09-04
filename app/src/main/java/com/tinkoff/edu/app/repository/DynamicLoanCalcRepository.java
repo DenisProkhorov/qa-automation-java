@@ -1,6 +1,8 @@
-package com.tinkoff.edu.app;
+package com.tinkoff.edu.app.repository;
 
-public class DynamicLoanCalcRepository implements LoanCalcRepository{
+import com.tinkoff.edu.app.model.LoanRequest;
+
+public class DynamicLoanCalcRepository implements LoanCalcRepository {
     private int requestId;
 
     public DynamicLoanCalcRepository(int requestId){
