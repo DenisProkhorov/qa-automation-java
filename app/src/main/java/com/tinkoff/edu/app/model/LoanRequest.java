@@ -1,4 +1,4 @@
-package com.tinkoff.edu.app;
+package com.tinkoff.edu.app.model;
 
 public class LoanRequest {
     private final int months;
