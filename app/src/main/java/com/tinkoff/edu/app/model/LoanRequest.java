@@ -1,11 +1,13 @@
 package com.tinkoff.edu.app.model;
 
 public class LoanRequest {
+    private LoanType loanType;
     private final int months;
     private final int amount;
 
-     public LoanRequest(int months, int amount){
-        this.months = months;
+     public LoanRequest(LoanType loanType, int months, int amount){
+         this.loanType = loanType;
+         this.months = months;
         this.amount = amount;
      }
 
@@ -15,6 +17,10 @@ public class LoanRequest {
 
     public int getAmount() {
         return amount;
+    }
+
+    public LoanType getPresonType() {
+        return loanType;
     }
 
     public String toString(){
