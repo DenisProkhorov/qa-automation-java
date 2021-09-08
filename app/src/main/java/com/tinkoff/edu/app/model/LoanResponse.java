@@ -1,4 +1,4 @@
-package com.tinkoff.edu.app;
+package com.tinkoff.edu.app.model;
 
 public class LoanResponse {
     private final int margin;
