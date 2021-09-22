@@ -1,19 +1,37 @@
 package com.tinkoff.edu.app.model;
 
+import java.util.Objects;
+import java.util.UUID;
+
 public class LoanResponse {
-    private final int margin;
-    private final ResponseType resolution;
+    private RequestStatus requestStatus;
+    private UUID requestId;
 
-    public LoanResponse(int margin, ResponseType resolution) {
-        this.margin = margin;
-        this.resolution = resolution;
+    public LoanResponse(RequestStatus requestStatus, UUID requestId) {
+        this.requestStatus = requestStatus;
+        this.requestId = requestId;
     }
 
-    public int getMargin() {
-        return margin;
+    public RequestStatus getResponseType() {
+        return requestStatus;
     }
 
-    public ResponseType getResolution() {
-        return resolution;
+    public UUID getRequestId() {
+        return requestId;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        LoanResponse that = (LoanResponse) o;
+        return requestStatus == that.requestStatus;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(requestStatus, requestId);
+    }
+
+
 }
