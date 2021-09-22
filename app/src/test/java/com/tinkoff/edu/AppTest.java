@@ -62,7 +62,7 @@ public class AppTest {
     }
 
     @Test
-    public void shouldGetErrorWhenApplyZeroOrNegativeAmountRequest() {
+    public void shouldGetErrorWhenApplyZeroOrNegativeMonthsRequest() {
         sut = new LoanCalcController(new StaticLoanCalcService(new DynamicLoanCalcRepository()));
         request = new LoanRequest(LoanType.PERSON, 0, 10_000);
         LoanResponse loanResponse = sut.createRequest(request);
@@ -70,7 +70,7 @@ public class AppTest {
     }
 
     @Test
-    public void shouldGetErrorWhenApplyZeroOrNegativeMonthsRequest() {
+    public void shouldGetErrorWhenApplyZeroOrNegativeAmountRequest() {
         sut = new LoanCalcController(new StaticLoanCalcService(new DynamicLoanCalcRepository()));
         request = new LoanRequest(LoanType.PERSON, 12, 0);
         LoanResponse loanResponse = sut.createRequest(request);
@@ -94,7 +94,7 @@ public class AppTest {
     }
 
     @Test
-    public void shouldGetApproveWhenPersonApply10_000Amount13MonthsRequest() {
+    public void shouldGetDeclineWhenPersonApply10_000Amount13MonthsRequest() {
         sut = new LoanCalcController(new StaticLoanCalcService(new DynamicLoanCalcRepository()));
         request = new LoanRequest(LoanType.PERSON, 13, 10_000);
         LoanResponse loanResponse = sut.createRequest(request);
@@ -103,7 +103,7 @@ public class AppTest {
 
 
     @Test
-    public void shouldGetApproveWhenPersonApply13_000Amount13MonthsRequest() {
+    public void shouldGetDeclineWhenPersonApply13_000Amount13MonthsRequest() {
         sut = new LoanCalcController(new StaticLoanCalcService(new DynamicLoanCalcRepository()));
         request = new LoanRequest(LoanType.PERSON, 13, 11_000);
         LoanResponse loanResponse = sut.createRequest(request);
