@@ -2,10 +2,11 @@ package com.tinkoff.edu.app.controllers;
 
 
 import com.tinkoff.edu.app.model.LoanResponse;
-import com.tinkoff.edu.app.model.LoanType;
-import com.tinkoff.edu.app.model.ResponseType;
-import com.tinkoff.edu.app.repository.LoanCalcService;
+import com.tinkoff.edu.app.model.RequestStatus;
+import com.tinkoff.edu.app.service.LoanCalcService;
 import com.tinkoff.edu.app.model.LoanRequest;
+
+import java.util.UUID;
 
 public class LoanCalcController {
     private LoanCalcService service;
@@ -15,40 +16,45 @@ public class LoanCalcController {
     }
 
     public LoanResponse createRequest(LoanRequest request) {
-        // По условиям домашки в данных трёх случаях ID должен быть равен -1 (пока без Exceptions)
-        if (request == null) return new LoanResponse(ResponseType.DENIED, -1);
-        if (request.getMonths() <= 0) return new LoanResponse(ResponseType.DENIED, -1);
-        if (request.getAmount() <= 0) return new LoanResponse(ResponseType.DENIED, -1);
-        // Вся остальная бизнес логика сделана без switch по условиям домашки
-        // (в следующий раз переделаю под switch)
-
-        if (request.getPresonType() == LoanType.IP) {
-            return new LoanResponse(ResponseType.DENIED, service.createRequest(request));
-        }
-        if (request.getPresonType() == LoanType.PERSON) {
-            if (request.getAmount() > 10_000.0) {
-                if (request.getMonths() > 12) {
-                    return new LoanResponse(ResponseType.DENIED, service.createRequest(request));
-                }
-            } else {
-                if (request.getMonths() <= 12) {
-                    return new LoanResponse(ResponseType.APPROVED, service.createRequest(request));
-                }
-            }
-        }
-        if (request.getPresonType() == LoanType.OOO) {
-            if (request.getAmount() <= 10_000.0) {
-                return new LoanResponse(ResponseType.DENIED, service.createRequest(request));
-            } else {
-                if (request.getMonths() < 12) {
-                    return new LoanResponse(ResponseType.APPROVED, service.createRequest(request));
+        // в случае ошибки, теперь возвращаем Exception
+        if (request == null) throw  new IllegalArgumentException("Request не может быть пустым");
+        if (request.getMonths() <= 0) throw new IllegalArgumentException("Срок должен быть больше 0");
+        if (request.getAmount() <= 0) throw new IllegalArgumentException("Размер займа должен быть больше 0");
+        switch (request.getLoanType()) {
+            case IP:
+                return new LoanResponse(RequestStatus.DECLINED, service.createRequest(request,RequestStatus.DECLINED));
+            case PERSON:
+                if (request.getAmount() > 10_000.0) {
+                    if (request.getMonths() > 12) {
+                        return new LoanResponse(RequestStatus.DECLINED, service.createRequest(request, RequestStatus.DECLINED));
+                    }
                 } else {
-                    return new LoanResponse(ResponseType.DENIED, service.createRequest(request));
+                    if (request.getMonths() <= 12) {
+                        return new LoanResponse(RequestStatus.APPROVED, service.createRequest(request,RequestStatus.APPROVED));
+                    }
                 }
-            }
+                break;
+            case OOO:
+                if (request.getAmount() <= 10_000.0) {
+                    return new LoanResponse(RequestStatus.DECLINED, service.createRequest(request,RequestStatus.DECLINED));
+                } else {
+                    if (request.getMonths() < 12) {
+                        return new LoanResponse(RequestStatus.APPROVED, service.createRequest(request,RequestStatus.APPROVED));
+                    } else {
+                        return new LoanResponse(RequestStatus.DECLINED, service.createRequest(request,RequestStatus.DECLINED));
+                    }
+                }
         }
-        // есть сценарии, которые логикой в задании не покрыты, для них сделал заглушку
-        // например: (LoanType.PERSON, request.getAmount() > 10_000.0 && request.getMonths() <= 12)
-        return new LoanResponse(ResponseType.DENIED, -1);
+        throw new IllegalArgumentException("набор параметров не покрывается бизнес логикой");
+    }
+
+    public RequestStatus getRequestStatus(UUID requestId){
+        if (requestId == null) throw  new IllegalArgumentException("requestId не может быть пустым");
+        return service.getRequestStatus(requestId);
+    }
+
+    public void updateRequestStatus(UUID requestId, RequestStatus status ){
+        if ((requestId == null)||(status == null)) throw  new IllegalArgumentException("requestId или status не может быть пустым");
+        service.updateRequestStatus(requestId, status);
     }
 }

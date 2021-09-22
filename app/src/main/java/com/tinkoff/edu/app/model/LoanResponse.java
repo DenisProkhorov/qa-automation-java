@@ -1,21 +1,22 @@
 package com.tinkoff.edu.app.model;
 
 import java.util.Objects;
+import java.util.UUID;
 
 public class LoanResponse {
-    private ResponseType responseType;
-    private int requestId;
+    private RequestStatus requestStatus;
+    private UUID requestId;
 
-    public LoanResponse(ResponseType responseType, int requestId) {
-        this.responseType = responseType;
+    public LoanResponse(RequestStatus requestStatus, UUID requestId) {
+        this.requestStatus = requestStatus;
         this.requestId = requestId;
     }
 
-    public ResponseType getResponseType() {
-        return responseType;
+    public RequestStatus getResponseType() {
+        return requestStatus;
     }
 
-    public int getRequestId() {
+    public UUID getRequestId() {
         return requestId;
     }
 
@@ -24,12 +25,12 @@ public class LoanResponse {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         LoanResponse that = (LoanResponse) o;
-        return requestId == that.requestId && responseType == that.responseType;
+        return requestStatus == that.requestStatus;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(responseType, requestId);
+        return Objects.hash(requestStatus, requestId);
     }
 
 
